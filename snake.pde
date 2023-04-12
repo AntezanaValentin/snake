@@ -1,11 +1,15 @@
 //snake
-int posx = 200;
-int posy = 200;
+int [] posx = new int[10];
+int [] posy = new int[10];
+
 int mov = 0;
+int p = 1;
 
 //manzana
- int posmx;
- int posmy;
+int posmx;
+int posmy;
+
+
 
 //posman
 int mx[] = {0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360, 380};
@@ -16,11 +20,32 @@ void setup() {
 }
 
 void snake() {
-  frameRate(10);
-  fill(0, 0, 255);
-  rect(posx, posy, 20, 20);
+  frameRate(5);
+  for (int i = 0; i < p; i++) {
+    fill(0, 0, 255);
+    rect(posx[i], posy[i], 20, 20);
+  }
   movimiento();
 }
+
+void movimiento() {
+  for (int i = p - 1; i > p; i-) {
+    posx[i] = posx[i - 1];
+    posy[i] = posy[i - 1];    
+  }
+  if (mov == 1) {
+    posx[0] += 20;
+  } else if (mov == 2) {
+    posy[0] += 20;
+  } else if (mov == 3) {
+    posx[0] -= 20;
+  } else if (mov == 4) {
+    posy[0] -= 20;
+  }
+}
+
+
+
 
 void keyPressed() {
   if (keyCode == RIGHT) {
@@ -35,32 +60,43 @@ void keyPressed() {
   if (keyCode == UP) {
     mov = 4;
   }
-}
-
-void movimiento() {
-  if (mov == 1) {
-    posx += 20;
-  } else if (mov == 2) {
-    posy += 20;
-  } else if (mov == 3) {
-    posx -= 20;
-  } else if (mov == 4) {
-    posy -= 20;
+  if (keyCode == 'p' || keyCode == 'P') {
+    p++;
   }
 }
+
+/*void keyReleased() {
+ if (keyCode == LEFT) {
+ mov = 0;
+ }
+ if (keyCode == UP) {
+ mov = 0;
+ }
+ if (keyCode == DOWN) {
+ mov = 0;
+ }
+ if (keyCode == RIGHT) {
+ mov = 0;
+ }
+ }*/
+
+
+
+
+
 
 void borders() {
-  if (posx >= 400) {
-    posx = 0;
+  if (posx[0] >= 400) {
+    posx[0] = 0;
   }
-  if (posx <= -20) {
-    posx = 380;
+  if (posx[0] <= -20) {
+    posx[0] = 380;
   }
-  if (posy >= 400) {
-    posy = 0;
+  if (posy[0] >= 400) {
+    posy[0] = 0;
   }
-  if (posy < -20) {
-    posy = 380;
+  if (posy[0] < -20) {
+    posy[0] = 380;
   }
 }
 
@@ -86,12 +122,9 @@ void manzana() {
 
 void eat() {
   /*manzana();
-  if (posmx == posx && posmy == posy) {
-    manzana();
-  }*/
-  
-  
-  
+   if (posmx == posx && posmy == posy) {
+   manzana();
+   }*/
 }
 
 
@@ -116,4 +149,9 @@ void draw() {
   snake();
   //eat();
   borders();
+
+  println(posx[0], posx[1], posx[2], posx[3], posx[4], posx[5], posx[6], posx[7], posx[8], posx[9]);
+  println(posy[0], posy[1], posy[2], posy[3], posy[4], posy[5], posy[6], posy[7], posy[8], posy[9]);
+  println(mov);
+  println();
 }
